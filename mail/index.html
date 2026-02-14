@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Love Surprise 💌</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .email-container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #764ba2;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+
+        .emoji-header {
+            text-align: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 15px rgba(118, 75, 162, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .send-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.4);
+            margin-top: 20px;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(118, 75, 162, 0.6);
+        }
+
+        .send-btn:active {
+            transform: translateY(0);
+        }
+
+        .send-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(118, 75, 162, 0.3);
+        }
+
+        .info-box p {
+            color: #333;
+            margin: 8px 0;
+            font-size: 0.95em;
+        }
+
+        .info-box strong {
+            color: #764ba2;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #764ba2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .preview-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .preview-link a {
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            padding: 10px 20px;
+            border: 2px solid #764ba2;
+            border-radius: 25px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .preview-link a:hover {
+            background: #764ba2;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .email-container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .emoji-header {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="emoji-header">💌</div>
+        <h1>Send Love Surprise</h1>
+        <p class="subtitle">Send a beautiful email to Bisakha with your special surprise!</p>
+
+        <div class="info-box">
+            <p><strong>📧 What happens:</strong></p>
+            <p>✨ Bisakha will receive a beautiful romantic email</p>
+            <p>💝 The email will have a special link to your surprise page</p>
+            <p>🎉 When she clicks it, the magic begins!</p>
+        </div>
+
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="yourName">Your Name 💕</label>
+                <input type="text" id="yourName" name="yourName" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="recipientEmail">Bisakha's Email Address 📧</label>
+                <input type="email" id="recipientEmail" name="recipientEmail" placeholder="bisakha@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="surpriseUrl">Surprise Page URL 🔗</label>
+                <input type="url" id="surpriseUrl" name="surpriseUrl" placeholder="https://yourwebsite.com/surprise.html" required>
+                <small style="color: #666; font-size: 0.9em; display: block; margin-top: 8px;">
+                    Upload your surprise page and paste the link here
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="personalMessage">Personal Message (Optional) 💬</label>
+                <textarea id="personalMessage" name="personalMessage" placeholder="Add a personal touch to the email..."></textarea>
+            </div>
+
+            <button type="submit" class="send-btn" id="sendBtn">
+                Send Love Letter 💝
+            </button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="color: #764ba2; margin-top: 15px; font-weight: 600;">Sending your love...</p>
+        </div>
+
+        <div class="message" id="message"></div>
+
+        <div class="preview-link">
+            <a href="final_surprise_for_bisakha.html" target="_blank">Preview Surprise Page 👀</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('sendBtn');
+            const loading = document.getElementById('loading');
+            const message = document.getElementById('message');
+            
+            // Disable button and show loading
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            loading.style.display = 'block';
+            message.style.display = 'none';
+            
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send via AJAX
+            fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                loading.style.display = 'none';
+                message.style.display = 'block';
+                
+                if (data.success) {
+                    message.className = 'message success';
+                    message.innerHTML = `
+                        <strong>✅ Success!</strong><br>
+                        ${data.message}<br>
+                        <span style="font-size: 2em; margin-top: 10px; display: block;">💝✨🎉</span>
+                    `;
+                    document.getElementById('emailForm').reset();
+                } else {
+                    message.className = 'message error';
+                    message.innerHTML = `
+                        <strong>❌ Error!</strong><br>
+                        ${data.message}
+                    `;
+                }
+                
+                // Re-enable button
+                btn.disabled = false;
+                btn.textContent = 'Send Love Letter 💝';
+            })
+            .catch(error => {
+                loading.style.display = 'none';
+                message.style.display = 'block';
+                message.className = 'message error';
+                message.innerHTML = `
+                    <strong>❌ Error!</strong><br>
+                    Something went wrong. Please try again.
+                `;
+                btn.disabled = false;
+                btn.textContent = 'Send Love Letter 💝';
+            });
+        });
+    </script>
+</body>
+</html>
